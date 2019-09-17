@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  well_id: MyString
+  toc_elev: 1.5
+  grnd_elev: 1.5
+  survey: one
+
+two:
+  well_id: MyString
+  toc_elev: 1.5
+  grnd_elev: 1.5
+  survey: two
