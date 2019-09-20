@@ -6,7 +6,7 @@ class ClientsController < ApplicationController
     end
 
     def show
-        @client = Client.find_by(client_id: params[:id])
+        @client = Client.find_by(client_id: params[:name])
         render json: @client
     end
 
@@ -28,7 +28,7 @@ class ClientsController < ApplicationController
 
 
  private 
-    
+    # Revise params to incorporate schemaless artchitecture.
     def client_params
      params.require(:client).permit(:name, :region)
     end
