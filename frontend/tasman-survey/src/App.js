@@ -1,5 +1,6 @@
 import React from 'react';
 import WelcomeQuestions from './components/WelcomeQuestions'
+import WellElevations from './components/WellElevations'
 import TasmanLogo from './components/Images/TasmanGeosciences.png'
 import './App.css';
 
@@ -9,6 +10,7 @@ function App() {
       <img className = 'Logo' src={TasmanLogo} alt="Logo"></img>
       <h2>Survey App</h2>
       <WelcomeQuestions></WelcomeQuestions>
+      <WellElevations></WellElevations>
     </div>
   );
 }
