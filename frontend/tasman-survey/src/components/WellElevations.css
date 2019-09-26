@@ -2,10 +2,71 @@
     border-radius: 6px;
   }
 
-  .WellElevationForm{
+.WellElevationForm{
+      margin-top: 4rem;
       background: lightgray;
-      max-width: 70%;
+      max-width: 80%;
       padding: 15px;
       margin: auto;
       border-radius: 8px;
   }
+.WellForm1{
+    grid-area: question1b;
+    margin: 5px;
+}
+.WellForm2{
+    grid-area: question2b;
+    margin: 5px;
+}
+.WellForm1T{
+    grid-area: question;
+    }
+.WellForm2T{
+    grid-area: question2;
+}
+.WellField{
+    grid-area: question2;
+    /* display: flex; */
+    margin: 5px;
+    padding: 3px;
+    border-radius: 8px;
+}
+.Radio{
+    grid-area: RButton;
+    font-size: 12px;
+    margin: auto;
+}
+.IssuesT{
+    grid-area: issues;
+}
+.Issues{
+    grid-area: issuesb;
+}
+.RemoveButton{
+     grid-area: button; 
+     margin: auto;  
+}
+.WellContainer{
+    display: grid;
+    grid-template-areas:    "question question2 RButton issues button"
+                            "question1b question2b RButton issuesb button";
+    grid-template-columns: 20% 20% 10% 45% 5%;
+    /* grid-template-rows: auto; */
+    margin: 3px;
+    font-size:12px;
+    background-color: rgb(192, 191, 191);
+    border-radius: 8px;
+    border-color: rgb(39, 39, 39);
+    border-style: solid;
+    border-width: .5px;
+}
+.FormTitle{
+    grid-area: title;
+}
+.ImpTitle{
+    color: red;
+    font-size: 13px;
+}
+.ImpValue{
+    border-color: red;
+}
