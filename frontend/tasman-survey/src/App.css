@@ -32,15 +32,13 @@
 }
 
 .WelcomeContainer{
+  justify-content: left;
   background-color: rgba(128, 128, 128, 0.657);
-  width: 80%;
+  width: 90%;
   margin: auto;
   padding: 10px;
   border-radius: 8px;
 }
-
-
-
 
 .welcomeQuestion{
   border-radius: 8px;
@@ -56,6 +54,15 @@ color: red;
   background-repeat: no-repeat;
   background-size: cover;
 
+}
+.Table{
+  max-width: 90%;
+  margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: rgb(235, 235, 235);
+  margin-top: 20px;
+  border-radius: 8px;
 }
 
 @keyframes App-logo-spin {

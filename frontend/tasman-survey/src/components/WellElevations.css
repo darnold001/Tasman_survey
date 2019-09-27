@@ -3,10 +3,13 @@
   }
 
 .WellElevationForm{
-      margin-top: 4rem;
+
+      /* margin-top: 15px; */
       background: lightgray;
-      max-width: 80%;
-      padding: 15px;
+      max-width: 90%;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 4px;
       margin: auto;
       border-radius: 8px;
   }
@@ -68,5 +71,6 @@
     font-size: 13px;
 }
 .ImpValue{
+    border-radius: 8px;
     border-color: red;
 }

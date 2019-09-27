@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wellID: MyString
+  date: 2019-09-27
+  rodheight: 1.5
+  corrected: 1.5
+  camlock: MyString
+  depthtowater: 1.5
+  gwe: 1.5
+  gse: 1.5
+  notes: MyString
+  survey: one
+
+two:
+  wellID: MyString
+  date: 2019-09-27
+  rodheight: 1.5
+  corrected: 1.5
+  camlock: MyString
+  depthtowater: 1.5
+  gwe: 1.5
+  gse: 1.5
+  notes: MyString
+  survey: two
