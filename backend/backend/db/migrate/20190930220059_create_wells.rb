@@ -10,6 +10,8 @@ class CreateWells < ActiveRecord::Migration[6.0]
       t.float :gwe
       t.float :gse
       t.string :notes
+      t.float :lat
+      t.float :long
       t.references :survey, null: false, foreign_key: true
 
       t.timestamps

@@ -7,11 +7,15 @@ export default class CalculatedElevations extends Component{
 
     render() {
         const data = [{
-          name: 'MW-01',
-          Rod: 26,
-          camlock: 'NO',
+          name: 'MW-00',
+          Rod: '00',
+          camlock: 'NA',
           corrected: "000.00",
-          surfaceElevation: '5280.00',
+          latitude: '40.0000',
+          longitude: '-104.0000',
+          surfaceElevation: '0000.00',
+          depthToWater: '0.00',
+          groundwaterElevation: '0000.00',
           date: '1/1/2015',
           issue: {
             description: 'The well has been destroyed'
@@ -34,14 +38,20 @@ export default class CalculatedElevations extends Component{
           Header: 'Corrected Elevation:',
           accessor: 'corrected' // Custom value accessors!
         }, {
+          Header: props => <span>Latitude:</span>, // Custom header components!
+          accessor: 'latitude'
+        },{
+          Header: props => <span>Longitude:</span>, // Custom header components!
+          accessor: 'longitude'
+        },{
           Header: props => <span>Camlock Noted:</span>, // Custom header components!
           accessor: 'camlock'
         },{
           Header: props => <span>Depth To Water</span>, // Custom header components!
-          accessor: 'friend.age'
+          accessor: 'depthToWater'
         },{
           Header: props => <span>Groundwater Elevation</span>, // Custom header components!
-          accessor: 'friend.age'
+          accessor: 'groundwaterElevation'
         }, {
           Header: props => <span>Ground Surface Elevaton</span>, // Custom header components!
           accessor: 'surfaceElevation'
@@ -52,10 +62,11 @@ export default class CalculatedElevations extends Component{
        
         return(
          <div
-         className = 'Table'
+           className = 'Table'
          >
-          <p>Corrected Elevations:</p>
-          <ReactTable
+        <p>Corrected Elevations:</p>
+        <ReactTable
+          className = 'ReactTable'
           data={data}
           columns={columns}
         />

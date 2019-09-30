@@ -6,7 +6,7 @@
     constructor(props) {
       super(props);
       this.state = {
-          users: [{wellName: "", rodHeight: "", selectedOption: ""}],
+          users: [{wellName: "", rodHeight: "", selectedOption: "", latitude: 0.0, longitude: 0.0}],
           elevation: 0,
         };
       this.radioChange = this.radioChange.bind(this);
@@ -26,6 +26,12 @@
 
     addElevation = (event) =>{
         this.setState({elevation: event.target.value})
+    }
+    addLatitude = (event) =>{
+      this.setState({latitude: event.target.value})
+    }
+    addLongitude = (event) =>{
+      this.setState({longitude: event.target.value})
     }
     addAMSLElevation = (event) =>{
       this.setState({AMSLElevation: event.target.value})
@@ -55,6 +61,10 @@
             <br></br><label className = 'WellForm2T'>Rod Elevation: </label><br></br>
             <input className = 'WellForm2' placeholder="Rod Elevation (ex. 3.25)" name="rodHeight" value={el.rodHeight ||''} onChange={this.handleChange.bind(this, i)} />
             <RadioButton radioChange = {this.radioChange} selectedOption = {this.state.selectedOption}></RadioButton>
+            <label className = 'latT'>Latitude (WGS 84):</label>
+            <input type ='field' className = 'lat' placeholder="latitude" name="latitude" value={el.latitude ||''} onChange={this.handleChange.bind(this, i)} />
+            <label className = 'longT'>Longitude (WGS 84):</label>
+            <input type ='field' className = 'long' placeholder="longitude" name="longitude" value={el.longitude ||''} onChange={this.handleChange.bind(this, i)} />
             <label className = 'IssuesT'>Notable Issues: </label> 
             <input type ='field' className = 'Issues' placeholder="issues" name="rodHeight" value={el.rodHeight ||''} onChange={this.handleChange.bind(this, i)} />
             <input className = 'RemoveButton' type='button' value='Delete' onClick={this.removeClick.bind(this, i)}/>

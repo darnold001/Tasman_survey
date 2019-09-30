@@ -51,9 +51,9 @@
 }
 .WellContainer{
     display: grid;
-    grid-template-areas:    "question question2 RButton issues button"
-                            "question1b question2b RButton issuesb button";
-    grid-template-columns: 20% 20% 10% 45% 5%;
+    grid-template-areas:    "question question2 RButton latT longT issues button"
+                            "question1b question2b RButton lat long issuesb button";
+    grid-template-columns: 20% 20% 10% 10% 10% 25% 5%;
     /* grid-template-rows: auto; */
     margin: 3px;
     font-size:12px;
@@ -74,3 +74,19 @@
     border-radius: 8px;
     border-color: red;
 }
+.lat{
+    grid-area: lat;
+    border-radius: 4px;
+}
+.latT{
+    grid-area: latT;
+}
+.longT{
+    grid-area: longT;
+}
+
+.long{
+    grid-area: long;
+    border-radius: 4px;
+}
+

@@ -20,7 +20,7 @@ export default class WelcomeQuestions extends Component{
         fetch(clientsAPI)
         .then(response => response.json())
         .then(response => this.setClientsArray(response))
-        .then(response => this.createSelection(response))
+        // .then(response => this.createSelection(response))
     }
     setName = (event) =>{
         this.setState({
@@ -114,9 +114,9 @@ export default class WelcomeQuestions extends Component{
         .then(response => response.json())
         .then(response => console.log('Post Complete', response))
     }
-    createSelection =() =>{
-      return this.state.clients.map(client => this.createOption(client))
-    }
+    // createSelection =() =>{
+    //   return this.state.clients.map(client => this.createOption(client))
+    // }
     createOption=(client)=>{
        return  <option className = 'selection' value={client.id}>{client.name}</option>
     }
@@ -187,7 +187,7 @@ export default class WelcomeQuestions extends Component{
                         <label className ="welcomeLabel"> Please Select your Client:</label>
                         <select className = 'welcomeSelection'  value = {this.state.value} onChange = {this.handleClientChange}>
                             <option className = 'selection' value =""> </option>
-                            {this.createSelection()}
+                            {/* {this.createSelection()} */}
                             <option className = 'selection' value="Client Not Listed">Client Not Listed</option>
                         </select><br></br>
                         {this.addAClient()}
