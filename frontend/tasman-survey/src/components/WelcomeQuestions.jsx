@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-const clientsAPI = 'http://localhost:3000/clients'
 const sitesAPI = 'http://localhost:3000/sites'
+const surveysAPI = 'http://localhost:3000/surveys'
 export default class WelcomeQuestions extends Component{
     constructor(){
         super()
@@ -13,11 +13,10 @@ export default class WelcomeQuestions extends Component{
             clients: [],
             sites: [1],
             siteName: "",
-            date: ""
         }
     }
     componentDidMount(){
-        fetch(clientsAPI)
+        fetch(surveysAPI)
         .then(response => response.json())
         .then(response => this.setClientsArray(response))
         // .then(response => this.createSelection(response))
@@ -27,34 +26,18 @@ export default class WelcomeQuestions extends Component{
             surveyorName: event.target.value
         })
     }
-    setSite = (event) =>{
-        this.setState({
-            siteName: event.target.value
-        })
-    }
-    setClient = (event) =>{
-        this.setState({
-            newClient: event.target.value
-        })
-    }
     setClientsArray = input =>{
         this.setState({
             clients: input
         })
-        // console.log('SetClientResponse', this.state.clients)
+        console.log('Clients Set!', this.state.clients)
     }
     handleSubmit = event =>{
         event.preventDefault()
         this.getAllSites(event.target.value)
     }
     addDate = event =>{
-        this.props.addTopDate(event.target.value)
-        // console.log('addDate', event.target.value)
-        // this.setState({
-        // date: event.target.value
-        // })
-        
-        
+        this.props.addTopDate(event.target.value)        
     }
 
     handleClientChange = event =>{
@@ -79,36 +62,37 @@ export default class WelcomeQuestions extends Component{
     }
     setSiteList = (response)=>{
         this.setState({sites: response})
-        this.renderSiteOptions()
+        // this.renderSiteOptions()
     }
     createSiteSelection = (site) =>{
         return <option className = 'siteSelection' value={site.site_name}>{site.site_name}</option>
     }
-    renderSiteOptions = () =>{
-        console.log('Got To Rewnder Site Options')
-         return(!this.state.sites == []
-            ?<form>
-                <label>Please enter entire Site Name: </label>
-             <input className = 'welcomeQuestion'type ='text' name = 'site' placeholder = 'i.e. FRI 2-18' onChange = {this.setSite}></input>
-             <br></br><input type = 'submit' placeholder = 'Add Site' value = 'Add Site' onClick = {this.postSite}></input>
-            </form>
-            :<div>
-                {this.state.sites.map(site => this.createSiteSelection(site))}
-                </div>
-            )  
-     }
+    // renderSiteOptions = () =>{
+    //     console.log('Got To Render Site Options')
+    //      return(!this.state.sites == []
+    //         ?<form>
+    //             <label>Please enter entire Site Name: </label>
+    //          <input className = 'welcomeQuestion'type ='text' name = 'site' placeholder = 'i.e. FRI 2-18' onChange = {this.setSite}></input>
+    //          <br></br><input type = 'submit' placeholder = 'Add Site' value = 'Add Site' onClick = {this.postSite}></input>
+    //         </form>
+    //         :<div>
+    //             {this.state.sites.map(site => this.createSiteSelection(site))}
+    //             </div>
+    //         )  
+    //  }
      postSite = event =>{
         event.preventDefault()
-        fetch(sitesAPI,{
+        fetch(surveysAPI,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Response-Type': 'application/json'
             },
             body:JSON.stringify({
-               site_name:this.state.siteName,
-               site_number: '00',
-               client_id: this.state.client_ID
+                date: this.props.dates,
+                client: this.props.CurrentClient,
+                site: this.props.CurrentSite,
+                surveyor:this.state.surveyorName,
             })
         })
         .then(response => response.json())
@@ -132,21 +116,12 @@ export default class WelcomeQuestions extends Component{
         : <div></div>
      )
     }
-    postClient = event =>{
-        event.preventDefault()
-        fetch(clientsAPI,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Response-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                name : this.state.newClient,
-                region: this.state.region,
-            })
-        })
-        .then(response => response.json())
-        .then(response => console.log('Post Complete', response))
+    passCurrentClient = (event) =>{
+        this.props.setCurrentClient(event.target.value)
+    }
+
+    passCurrentSite = (event) =>{
+        this.props.setCurrentSite(event.target.value)
     }
 
     addASite = () =>{
@@ -159,22 +134,15 @@ export default class WelcomeQuestions extends Component{
     addAClient = () =>{
         return (this.state.ClientSelection === 'Client Not Listed'?
         <form>
-         <label className = 'welcomeSubLabel'> Please enter the COMPLETE name of your Client below:</label><br></br>
-             <input className = 'welcomeQuestion' type ='text' name = 'site' placeholder = 'Client Name' onChange = {this.setClient}></input>
-                 <br></br><label className = 'welcomeSubLabel'> Please select your working region:</label><br></br>
-                    <select className = 'welcomeSelection'  value = {this.state.value} onChange = {this.handleRegionSelection}>
-                            <option className = 'selection' value =""> </option>
-                            <option className = 'selection' value="Colorado Region">Colorado Region</option>
-                            <option className = 'selection' value="New Mexico / Texas Region">New Mexico/Texas Region</option>
-                            <option className = 'selection' value="Montana Region">Montana Region</option>
-                            <option className = 'selection' value="Florida Region">Florida Region</option>
-                    </select><br></br>
-            <input className = 'welcomeSubmit' type = 'submit'onClick = {this.postClient}></input>
+         <label className = 'welcomeSubLabel'> Please enter the COMPLETE name of your client:</label>
+             <input className = 'welcomeQuestion' type ='text' name = 'client' placeholder = 'Client Name' onChange = {this.passCurrentClient}></input><br></br>
+             <label className = 'welcomeSubLabel'> Please enter the COMPLETE name of your site:</label>
+             <input className = 'welcomeQuestion' type ='text' name = 'site' placeholder = 'Site Name' onChange = {this.passCurrentSite}></input><br></br>
+             <input type = 'submit' placeholder = 'Add Site' value = 'Add Site' onClick = {this.postSite}></input>
         </form>
          : <div></div>
         )
     }
-
 
     render(){
         return(
@@ -191,7 +159,8 @@ export default class WelcomeQuestions extends Component{
                             <option className = 'selection' value="Client Not Listed">Client Not Listed</option>
                         </select><br></br>
                         {this.addAClient()}
-                        {this.renderSiteOptions()}
+                        {/* {this.renderSiteOptions() */}
+                        
              </form>
         </div>
         )

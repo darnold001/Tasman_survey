@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2019-10-01
+  client: MyString
+  site: MyString
+  surveyor: MyString
+  mw: MyString
+
+two:
+  date: 2019-10-01
+  client: MyString
+  site: MyString
+  surveyor: MyString
+  mw: MyString

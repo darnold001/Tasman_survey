@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import WelcomeQuestions from './components/WelcomeQuestions'
-import WellElevations from './components/WellElevations'
+import SiteInfo from './components/SiteInfo'
+// import WellElevations from './components/WellElevations'
 import TasmanLogo from './components/Images/TasmanGeosciences.png'
 import './App.css';
-import CalculatedElevations from './components/CalculatedElevations';
+// import CalculatedElevations from './components/CalculatedElevations';
 
 export default class App extends Component{
     constructor(){
@@ -40,12 +41,15 @@ export default class App extends Component{
         setCurrentSite = {this.setCurrentSite}
         setCurrentClient = {this.setCurrentClient}
         addTopDate = {this.addTopDate}
-      />
-      <WellElevations
+        dates = {this.state.date}
         CurrentSite={this.state.CurrentSite}
         CurrentClient={this.state.CurrentClient}
-       />
-      <CalculatedElevations></CalculatedElevations>
+      />
+      {/* <SiteInfo>
+        CurrentSite = {this.state.CurrentSite}
+        CurrentClient = {this.state.CurrentClient}
+      </SiteInfo> */}
+  
     </div>
   );
 }

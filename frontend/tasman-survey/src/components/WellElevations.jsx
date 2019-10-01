@@ -60,11 +60,11 @@
             <input className = 'WellForm1'placeholder="Monitoring Well ID (ex. MW-01)" name="wellName" value={el.wellName ||''} onChange={this.handleChange.bind(this, i)} />
             <br></br><label className = 'WellForm2T'>Rod Elevation: </label><br></br>
             <input className = 'WellForm2' placeholder="Rod Elevation (ex. 3.25)" name="rodHeight" value={el.rodHeight ||''} onChange={this.handleChange.bind(this, i)} />
-            <RadioButton radioChange = {this.radioChange} selectedOption = {this.state.selectedOption}></RadioButton>
             <label className = 'latT'>Latitude (WGS 84):</label>
-            <input type ='field' className = 'lat' placeholder="latitude" name="latitude" value={el.latitude ||''} onChange={this.handleChange.bind(this, i)} />
+            <input type ='field' className = 'lat' placeholder="ex. 40.00000" name="latitude" value={el.latitude ||''} onChange={this.handleChange.bind(this, i)} />
             <label className = 'longT'>Longitude (WGS 84):</label>
-            <input type ='field' className = 'long' placeholder="longitude" name="longitude" value={el.longitude ||''} onChange={this.handleChange.bind(this, i)} />
+            <input type ='field' className = 'long' placeholder="ex. -104.00000" name="longitude" value={el.longitude ||''} onChange={this.handleChange.bind(this, i)} />
+            <RadioButton radioChange = {this.radioChange} selectedOption = {this.state.selectedOption}></RadioButton>
             <label className = 'IssuesT'>Notable Issues: </label> 
             <input type ='field' className = 'Issues' placeholder="issues" name="rodHeight" value={el.rodHeight ||''} onChange={this.handleChange.bind(this, i)} />
             <input className = 'RemoveButton' type='button' value='Delete' onClick={this.removeClick.bind(this, i)}/>

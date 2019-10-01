@@ -37,11 +37,11 @@
   width: 90%;
   margin: auto;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .welcomeQuestion{
-  border-radius: 8px;
+  border-radius: 4px;
   min-width: 40%;
 }
 

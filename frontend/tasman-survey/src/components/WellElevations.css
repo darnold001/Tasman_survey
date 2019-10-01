@@ -15,11 +15,13 @@
   }
 .WellForm1{
     grid-area: question1b;
-    margin: 5px;
+    margin-left: 5px;
+    border-radius: 4px;
 }
 .WellForm2{
     grid-area: question2b;
-    margin: 5px;
+    margin-left: 5px;
+    border-radius: 4px;
 }
 .WellForm1T{
     grid-area: question;
@@ -30,13 +32,14 @@
 .WellField{
     grid-area: question2;
     /* display: flex; */
-    margin: 5px;
     padding: 3px;
+    margin-left: 5px;
     border-radius: 8px;
 }
 .Radio{
     grid-area: RButton;
     font-size: 12px;
+    margin-left: 5px;
     margin: auto;
 }
 .IssuesT{
@@ -44,16 +47,19 @@
 }
 .Issues{
     grid-area: issuesb;
+    margin-left: 5px;
+    border-radius: 4px;
 }
 .RemoveButton{
-     grid-area: button; 
+     grid-area: buttonb; 
+     margin-right:10px;
      margin: auto;  
 }
 .WellContainer{
     display: grid;
-    grid-template-areas:    "question question2 RButton latT longT issues button"
-                            "question1b question2b RButton lat long issuesb button";
-    grid-template-columns: 20% 20% 10% 10% 10% 25% 5%;
+    grid-template-areas:    "question question2 latT longT RButton issues button"
+                            "question1b question2b lat long RButton issuesb buttonb";
+    grid-template-columns: 15% 10% 15% 15% 10% 25% 5%;
     /* grid-template-rows: auto; */
     margin: 3px;
     font-size:12px;
@@ -71,12 +77,14 @@
     font-size: 13px;
 }
 .ImpValue{
-    border-radius: 8px;
+    border-radius: 4px;
     border-color: red;
 }
 .lat{
     grid-area: lat;
     border-radius: 4px;
+    margin-left: 5px;
+
 }
 .latT{
     grid-area: latT;
@@ -88,5 +96,6 @@
 .long{
     grid-area: long;
     border-radius: 4px;
+    margin-left: 5px;
 }
 
