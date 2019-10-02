@@ -7,11 +7,12 @@ export default class WelcomeQuestions extends Component{
         this.state={
             surveyorName: "",
             ClientSelection: "",
-            SiteSelection: "",
+            // SiteSelection: "",
             newClient: "",
             region: "",
             clients: [],
-            sites: [1],
+            sites: [],
+            siteSelected: false,
             siteName: "",
         }
     }
@@ -20,6 +21,13 @@ export default class WelcomeQuestions extends Component{
         .then(response => response.json())
         .then(response => this.setClientsArray(response))
         // .then(response => this.createSelection(response))
+    }
+    passCurrentClient = (event) =>{
+        this.props.setCurrentClient(event.target.value)
+    }
+
+    passCurrentSite = (event) =>{
+        this.props.setCurrentSite(event.target.value)
     }
     setName = (event) =>{
         this.setState({
@@ -39,47 +47,55 @@ export default class WelcomeQuestions extends Component{
     addDate = event =>{
         this.props.addTopDate(event.target.value)        
     }
+    addCurrentSite = (event) =>{
+        this.props.setCurrentSite(event.target.value)
+        this.props.setSiteID(event.target.value)
+        console.log('addCurrentSite', event.target.id)
+    }
 
     handleClientChange = event =>{
         this.setState({ClientSelection: event.target.value})
         this.props.setCurrentClient(event.target.value)
+        this.props.setSiteID(event.target.id)
         this.fetchSites(this.state.ClientSelection)
         console.log('Hit Client Change', event.target.value)
     }
     handleRegionSelection = event =>{
         this.setState({region: event.target.value})
     }
-    handleSiteChange = event =>{
-        this.setState({SiteSelection: event.target.value})
-        this.props.setCurrentSite(event.target.value)
+    // handleSiteChange = event =>{
+    //     this.setState({SiteSelection: event.target.value})
+    //     this.props.setCurrentSite(event.target.id)
    
-    }
-    fetchSites=(ID)=>{
-        fetch(sitesAPI+`/${ID}`)
+    // }
+    fetchSites=(name)=>{
+        console.log('fetchSites',name)
+        fetch(surveysAPI+`/${name}`)
         .then(response => response.json())
         .then(response => this.setSiteList(response))
         .then(response => console.log('GET SITES FETCH', this.state.sites))
+        .then(response => {this.filterSites(response)})
+  
     }
+    filterSites = sites =>{
+       const releventSites = this.state.sites.filter(site =>site.client === this.props.CurrentClient)
+       console.log('FILTERSITE', releventSites)
+       this.setSiteList(releventSites)
+
+    }
+
     setSiteList = (response)=>{
         this.setState({sites: response})
-        // this.renderSiteOptions()
+        this.setState({siteSelected: true})
+    }
+
+    mapSites =()=>{
+       return  this.state.sites.map(site => this.createSiteSelection(site))
     }
     createSiteSelection = (site) =>{
-        return <option className = 'siteSelection' value={site.site_name}>{site.site_name}</option>
+        return <option className = 'siteSelection' value={site.id}>{site.site}</option>
     }
-    // renderSiteOptions = () =>{
-    //     console.log('Got To Render Site Options')
-    //      return(!this.state.sites == []
-    //         ?<form>
-    //             <label>Please enter entire Site Name: </label>
-    //          <input className = 'welcomeQuestion'type ='text' name = 'site' placeholder = 'i.e. FRI 2-18' onChange = {this.setSite}></input>
-    //          <br></br><input type = 'submit' placeholder = 'Add Site' value = 'Add Site' onClick = {this.postSite}></input>
-    //         </form>
-    //         :<div>
-    //             {this.state.sites.map(site => this.createSiteSelection(site))}
-    //             </div>
-    //         )  
-    //  }
+
      postSite = event =>{
         event.preventDefault()
         fetch(surveysAPI,{
@@ -96,40 +112,37 @@ export default class WelcomeQuestions extends Component{
             })
         })
         .then(response => response.json())
+        .then(response =>{this.props.setSiteID(response.id)})
         .then(response => console.log('Post Complete', response))
     }
-    // createSelection =() =>{
-    //   return this.state.clients.map(client => this.createOption(client))
-    // }
-    createOption=(client)=>{
-       return  <option className = 'selection' value={client.id}>{client.name}</option>
+    createSelection =() =>{
+        console.log('console',this.state.clients)
+      return this.state.clients.map(client => this.createOption(client)
+        )
     }
-    selectSite = () =>{
-        console.log('Site Selection Hit')
-     return(this.state.sites === []
-        ?<form>
-           <select>
-            {/* {this.createSiteOptions()} */}
-            <option value = 'Job Not Listed'> Job Not Listed</option>
-           </select>
-         </form>
-        : <div></div>
-     )
+    createOption=(name)=>{
+       return  <option className = 'selection' id ={name.id} value={name.client}>{name.client}</option>
     }
-    passCurrentClient = (event) =>{
-        this.props.setCurrentClient(event.target.value)
-    }
-
-    passCurrentSite = (event) =>{
-        this.props.setCurrentSite(event.target.value)
-    }
-
+ 
     addASite = () =>{
        return (this.state.SiteSelection === 'Site Not Listed'?
             <div>
             <label className ="welcomeSubLabel"> Please enter the COMPLETE site name below:</label><br></br>
             <input className = 'welcomeQuestion'type ='text' name = 'surveyor' placeholder = ' Site Name (i.e. Fri 2-18)' onChange = {this.setName}></input></div>
              : <div></div>)
+    }
+
+    renderSites = () =>{
+        return(this.state.siteSelected === false?
+            <div></div>:
+      
+            <form>
+              <label> Please select your site: </label>
+                <select onChange = {this.addCurrentSite}>
+                    {this.mapSites()}
+                    <option value = 'site Not Listed'> Job Not Listed</option>
+                </select>
+            </form>)
     }
     addAClient = () =>{
         return (this.state.ClientSelection === 'Client Not Listed'?
@@ -155,12 +168,11 @@ export default class WelcomeQuestions extends Component{
                         <label className ="welcomeLabel"> Please Select your Client:</label>
                         <select className = 'welcomeSelection'  value = {this.state.value} onChange = {this.handleClientChange}>
                             <option className = 'selection' value =""> </option>
-                            {/* {this.createSelection()} */}
+                            {this.createSelection()}
                             <option className = 'selection' value="Client Not Listed">Client Not Listed</option>
                         </select><br></br>
-                        {this.addAClient()}
-                        {/* {this.renderSiteOptions() */}
-                        
+                        {this.renderSites()}
+                        {this.addAClient()}    
              </form>
         </div>
         )

@@ -12,7 +12,8 @@ export default class App extends Component{
     this.state = {
       CurrentClient: "",
       CurrentSite: "",
-      date:""
+      date:"",
+      SiteID: ""
     }
   }
 
@@ -32,6 +33,25 @@ export default class App extends Component{
       date: date
     })
   }
+
+  renderSiteInfo =()=>{
+    return(<div>
+      {this.state.SiteID !==0
+      ?<SiteInfo
+        CurrentSite = {this.state.CurrentSite}
+        CurrentClient = {this.state.CurrentClient}
+        SiteID = {this.setSiteID}
+        />
+      :<p></p>
+    }
+    </div>
+    )
+  }
+
+  setSiteID = id =>{
+    this.setState({SiteID: id})
+  }
+
   render(){
   return (
     <div className="App" id = 'BackgroundImage' style = {{ backgroundImage: "url("+  +")"}}>
@@ -40,16 +60,13 @@ export default class App extends Component{
       <WelcomeQuestions
         setCurrentSite = {this.setCurrentSite}
         setCurrentClient = {this.setCurrentClient}
+        setSiteID = {this.setSiteID}
         addTopDate = {this.addTopDate}
         dates = {this.state.date}
         CurrentSite={this.state.CurrentSite}
         CurrentClient={this.state.CurrentClient}
       />
-      {/* <SiteInfo>
-        CurrentSite = {this.state.CurrentSite}
-        CurrentClient = {this.state.CurrentClient}
-      </SiteInfo> */}
-  
+      {this.renderSiteInfo()}
     </div>
   );
 }
