@@ -7,21 +7,20 @@ export default class WelcomeQuestions extends Component{
         this.state={
             surveyorName: "",
             ClientSelection: "",
-            // SiteSelection: "",
             newClient: "",
-            region: "",
-            clients: [],
             sites: [],
             siteSelected: false,
+            sitesFiltered: false,
             siteName: "",
+            FilteredSites: []
         }
     }
     componentDidMount(){
         fetch(surveysAPI)
         .then(response => response.json())
-        .then(response => this.setClientsArray(response))
-        // .then(response => this.createSelection(response))
+        .then(response => this.setSiteList(response))
     }
+
     passCurrentClient = (event) =>{
         this.props.setCurrentClient(event.target.value)
     }
@@ -34,12 +33,7 @@ export default class WelcomeQuestions extends Component{
             surveyorName: event.target.value
         })
     }
-    setClientsArray = input =>{
-        this.setState({
-            clients: input
-        })
-        console.log('Clients Set!', this.state.clients)
-    }
+
     handleSubmit = event =>{
         event.preventDefault()
         this.getAllSites(event.target.value)
@@ -57,47 +51,33 @@ export default class WelcomeQuestions extends Component{
         this.setState({ClientSelection: event.target.value})
         this.props.setCurrentClient(event.target.value)
         this.props.setSiteID(event.target.id)
-        this.fetchSites(this.state.ClientSelection)
+        this.setState({siteSelected: true})
+        this.filterSites()
         console.log('Hit Client Change', event.target.value)
     }
     handleRegionSelection = event =>{
         this.setState({region: event.target.value})
     }
-    // handleSiteChange = event =>{
-    //     this.setState({SiteSelection: event.target.value})
-    //     this.props.setCurrentSite(event.target.id)
-   
-    // }
-    fetchSites=(name)=>{
-        console.log('fetchSites',name)
-        fetch(surveysAPI+`/${name}`)
-        .then(response => response.json())
-        .then(response => this.setSiteList(response))
-        .then(response => console.log('GET SITES FETCH', this.state.sites))
-        .then(response => {this.filterSites(response)})
-  
-    }
-    filterSites = sites =>{
-       const releventSites = this.state.sites.filter(site =>site.client === this.props.CurrentClient)
-       console.log('FILTERSITE', releventSites)
-       this.setSiteList(releventSites)
 
+    filterSites = () =>{
+        const FilteredLocs = this.state.sites.filter(site =>site.client === this.state.ClientSelection)
+       return this.mapSites(FilteredLocs)
     }
 
     setSiteList = (response)=>{
         this.setState({sites: response})
-        this.setState({siteSelected: true})
+    }
+    
+    mapSites =(sites)=>{
+        return sites.map(site => this.createSiteSelection(site))
     }
 
-    mapSites =()=>{
-       return  this.state.sites.map(site => this.createSiteSelection(site))
-    }
     createSiteSelection = (site) =>{
         return <option className = 'siteSelection' value={site.id}>{site.site}</option>
     }
 
-     postSite = event =>{
-        event.preventDefault()
+    postSite = event =>{
+     event.preventDefault()
         fetch(surveysAPI,{
             method: 'POST',
             headers: {
@@ -109,15 +89,14 @@ export default class WelcomeQuestions extends Component{
                 client: this.props.CurrentClient,
                 site: this.props.CurrentSite,
                 surveyor:this.state.surveyorName,
-            })
         })
+    })
         .then(response => response.json())
         .then(response =>{this.props.setSiteID(response.id)})
         .then(response => console.log('Post Complete', response))
     }
     createSelection =() =>{
-        console.log('console',this.state.clients)
-      return this.state.clients.map(client => this.createOption(client)
+        return this.state.sites.map(client => this.createOption(client)
         )
     }
     createOption=(name)=>{
@@ -133,13 +112,12 @@ export default class WelcomeQuestions extends Component{
     }
 
     renderSites = () =>{
-        return(this.state.siteSelected === false?
-            <div></div>:
-      
-            <form>
+        return(this.state.siteSelected == false?
+            <div></div>
+            :<form>
               <label> Please select your site: </label>
                 <select onChange = {this.addCurrentSite}>
-                    {this.mapSites()}
+                    {this.filterSites()}
                     <option value = 'site Not Listed'> Job Not Listed</option>
                 </select>
             </form>)
@@ -165,9 +143,9 @@ export default class WelcomeQuestions extends Component{
                <input className = 'welcomeQuestion'type ='text' name = 'surveyor' placeholder = 'surveyors name' onChange = {this.setName}></input><br></br>
                 <label className ="welcomeQuetion"> Please Enter The Date of the Survey:</label>
                     <input className = 'welcomeLabel' type = 'date' value = {this.state.value} onChange = {this.addDate}></input><br></br>
-                        <label className ="welcomeLabel"> Please Select your Client:</label>
-                        <select className = 'welcomeSelection'  value = {this.state.value} onChange = {this.handleClientChange}>
-                            <option className = 'selection' value =""> </option>
+                        <label className ="welcomeLabel"> Please Select your Client: </label>
+                        <select className = 'welcomeSelection'  value = {this.state.ClientSelection} onChange = {this.handleClientChange}>
+                            <option className = 'selection' > </option>
                             {this.createSelection()}
                             <option className = 'selection' value="Client Not Listed">Client Not Listed</option>
                         </select><br></br>
