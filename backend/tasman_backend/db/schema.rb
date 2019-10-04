@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2019_10_01_192828) do
     t.text "notes"
     t.float "lat"
     t.float "long"
+    t.float "amslElev"
+    t.float "cpRod"
     t.bigint "survey_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,28 +1,30 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+const wellsAPI = 'http://localhost:3000/wells'
+var data = []
 
 export default class CalculatedElevations extends Component{
+   
     
-
     render() {
-        const data = [{
-          name: 'MW-00',
-          Rod: '00',
-          camlock: 'NA',
-          corrected: "000.00",
-          latitude: '40.0000',
-          longitude: '-104.0000',
-          surfaceElevation: '0000.00',
-          depthToWater: '0.00',
-          groundwaterElevation: '0000.00',
-          date: '1/1/2015',
-          issue: {
-            description: 'The well has been destroyed'
-          }
-        },{
-    
-        }]
+        // const data = [{
+        //   name: 'MW-00',
+        //   Rod: '00',
+        //   camlock: 'NA',
+        //   corrected: "000.00",
+        //   latitude: '40.0000',
+        //   longitude: '-104.0000',
+        //   surfaceElevation: '0000.00',
+        //   depthToWater: '0.00',
+        //   groundwaterElevation: '0000.00',
+        //   date: '1/1/2015',
+        //   issue: {
+        //     description: 'The well has been destroyed'
+        //   }
+        // }]
+        
+
         const columns = [{
           Header: props => <span>Date Surveyed:</span>, // Custom header components!
           accessor: 'date'
@@ -67,7 +69,7 @@ export default class CalculatedElevations extends Component{
         <p>Corrected Elevations:</p>
         <ReactTable
           className = 'ReactTable'
-          data={data}
+          data={this.props.data}
           columns={columns}
         />
         </div>)

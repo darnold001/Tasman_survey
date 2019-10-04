@@ -27,16 +27,18 @@ class WellsController < ApplicationController
 private
 
     def well_params
-        params.require(
+        params.require(:well).permit(
                        :wellID,
                        :date,
-                       :rodheight,
+                       :rodHeight,
                        :corrected,
                        :camlock,
                        :depthtowater,
                        :gwe,
                        :gse,
                        :notes,
+                       :cpRod,
+                       :amslElev,
                        :lat,
                        :long,
                        :survey_id

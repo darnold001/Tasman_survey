@@ -57,8 +57,8 @@
 }
 .WellContainer{
     display: grid;
-    grid-template-areas:    "question question2 latT longT RButton issues button"
-                            "question1b question2b lat long RButton issuesb buttonb";
+    grid-template-areas:    "question question2 latT longT RButton issues button submitT"
+                            "question1b question2b lat long RButton issuesb buttonb submit";
     grid-template-columns: 15% 10% 15% 15% 10% 25% 5%;
     /* grid-template-rows: auto; */
     margin: 3px;
@@ -99,3 +99,6 @@
     margin-left: 5px;
 }
 
+.SubmitButton{
+    grid-area: submit;
+}

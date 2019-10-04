@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-const sitesAPI = 'http://localhost:3000/sites'
+// const sitesAPI = 'http://localhost:3000/sites'
 const surveysAPI = 'http://localhost:3000/surveys'
 export default class WelcomeQuestions extends Component{
     constructor(){
@@ -117,6 +117,7 @@ export default class WelcomeQuestions extends Component{
             :<form>
               <label> Please select your site: </label>
                 <select onChange = {this.addCurrentSite}>
+                    <option value = ""></option>
                     {this.filterSites()}
                     <option value = 'site Not Listed'> Job Not Listed</option>
                 </select>
